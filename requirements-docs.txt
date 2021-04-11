@@ -1,0 +1,5 @@
+mkdocs-material==7.1.0
+mkdocs-material-extensions==1.0.1
+mkdocs-git-revision-date-plugin
+mkdocs-awesome-pages-plugin
+git+https://github.com/jldiaz/mkdocs-plugin-tags

@@ -1,0 +1,49 @@
+site_name: CTF Writeups with Fluffy
+theme:
+  name: material
+  logo: images/mrfluffy-cutout.png
+  favicon: images/mrfluffy-cutout.png
+  features:
+    - search.suggest
+    - search.highlight
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.expand
+    - navigation.sections
+    - toc.integrate
+  palette:
+    primary: deep purple
+  icon:
+    logo: logo
+
+plugins:
+  - search
+  - git-revision-date
+  - awesome-pages
+markdown_extensions:
+  - admonition
+  - abbr
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
