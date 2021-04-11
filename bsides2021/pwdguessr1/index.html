@@ -1,0 +1,1058 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../images/mrfluffy-cutout.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.0">
+    
+    
+      
+        <title>PwdGuessr 1 - CTF Writeups with Fluffy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.33e2939f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#7e56c2">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="deep-purple" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pwdguessr-1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="CTF Writeups with Fluffy" class="md-header__button md-logo" aria-label="CTF Writeups with Fluffy" data-md-component="logo">
+      
+  <img src="../../images/mrfluffy-cutout.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CTF Writeups with Fluffy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PwdGuessr 1
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CTF Writeups with Fluffy" class="md-nav__button md-logo" aria-label="CTF Writeups with Fluffy" data-md-component="logo">
+      
+  <img src="../../images/mrfluffy-cutout.png" alt="logo">
+
+    </a>
+    CTF Writeups with Fluffy
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Writeups
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Bsides2021
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Bsides2021" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Bsides2021
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          PwdGuessr 1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        PwdGuessr 1
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#challenge-description" class="md-nav__link">
+    Challenge Description
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#play-along-at-home" class="md-nav__link">
+    Play Along at Home
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#walkthrough" class="md-nav__link">
+    Walkthrough
+  </a>
+  
+    <nav class="md-nav" aria-label="Walkthrough">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initial-recon" class="md-nav__link">
+    Initial Recon
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bruteforce" class="md-nav__link">
+    Bruteforce
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wordlists" class="md-nav__link">
+    Wordlists
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimisation-guess-prefixes" class="md-nav__link">
+    Optimisation - Guess Prefixes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-wordlists" class="md-nav__link">
+    More Wordlists
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#even-more-wordlists" class="md-nav__link">
+    Even More Wordlists
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#full-source" class="md-nav__link">
+    Full Source
+  </a>
+  
+    <nav class="md-nav" aria-label="Full Source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pwdguessrpy" class="md-nav__link">
+    pwdguessr.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pwdguessrlistspy" class="md-nav__link">
+    pwdguessrlists.py
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pwdguessr2/" class="md-nav__link">
+        PwdGuessr 2
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="pwdguessr-1">PwdGuessr 1<a class="headerlink" href="#pwdguessr-1" title="Permanent link">&para;</a></h1>
+<p>An interesting password guessing challenge</p>
+<h2 id="challenge-description">Challenge Description<a class="headerlink" href="#challenge-description" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>To guess at things randomly is not to guess at all. Only through being methodical can enlightenment be achieved</p>
+</blockquote>
+<p><strong>Note</strong>: This challenge has a second part which is a trophy challenge.
+You must be the first verified team to submit PwdGuessr2 to win the
+trophy.</p>
+<p>We have learned that the Demon-tron server has very particular requirements for
+their users' passwords.</p>
+<p>We have also managed to learn how those passwords are checked:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">check_pwd</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">pwd</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">zip_longest</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">pwd</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># Add a delay to stop password-guessing attacks</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div>
+<p><code>nc $target_dns $target_port</code></p>
+<h2 id="play-along-at-home">Play Along at Home<a class="headerlink" href="#play-along-at-home" title="Permanent link">&para;</a></h2>
+<p>During the CTF, the challenge was hosted at <code>pwdguessr.chal.cybears.io:2323</code></p>
+<p>To play after the CTF, run
+<div class="highlight"><pre><span></span><code>docker run --name pwdguessr1 -dp <span class="m">2323</span>:2323 --rm registry.gitlab.com/cybears/fall-of-cybeartron/misc-pwdguessr
+</code></pre></div>
+and then change the host in the scripts to <code>127.0.0.1</code></p>
+<h2 id="walkthrough">Walkthrough<a class="headerlink" href="#walkthrough" title="Permanent link">&para;</a></h2>
+<h3 id="initial-recon">Initial Recon<a class="headerlink" href="#initial-recon" title="Permanent link">&para;</a></h3>
+<p>From the definition of <code>check_pwd</code> given in the challenge description, it appears that when submitting a
+password there are three possible outcomes:</p>
+<ol>
+<li>Success - If we get the password entirely correct</li>
+<li>Delayed Failure - If the attempted password <strong>is not</strong> a prefix of the real password, there will be a 500ms delay</li>
+<li>Immediate Failure - If the attempted password <strong>is</strong> a prefix of the real password, it will return immediately</li>
+</ol>
+<p>Connecting to the challenge with <code>nc pwdguessr.chal.cybears.io 2323</code> shows the prompt
+<div class="highlight"><pre><span></span><code>Welcome, user 5909559.
+Please enter your password: 
+</code></pre></div>
+The initial welcome user with ID changes on each connection, this hints at something we discover later which
+is that every connection the password changes.</p>
+<p>Entering a random password lead to a brief pause, followed by the response
+<div class="highlight"><pre><span></span><code>Sorry, that password was incorrect. Please enter your password: 
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The response does not end with a newline, so <code>recvline</code> will not work while scripting this</p>
+</div>
+<h3 id="bruteforce">Bruteforce<a class="headerlink" href="#bruteforce" title="Permanent link">&para;</a></h3>
+<p>To get a better idea of the passwords, a script was written to iteratively bruteforce character by character,
+continuing whenever an attempted password does not cause a 500ms delay.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Script requires <code>pwntools</code> for providing a nice wrapper around the socket and <code>tqdm</code> for progress bars</p>
+</div>
+<p>After a bit of iterating on the script due to realizing a timeout occurred after a while, it looked like
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="n">alphabet</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s2">&quot;pwdguessr.chal.cybears.io&quot;</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">2323</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+<span class="n">user_line</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">user_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&quot;Please enter your password: &quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SuccessfulConnection</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Timeout</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">NotFound</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">out</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;Sorry&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">out</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;Conne&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Timeout</span>
+        <span class="k">raise</span> <span class="n">SuccessfulConnection</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+    <span class="n">after</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&quot;Please enter your password: &quot;</span><span class="p">)</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">after</span> <span class="o">-</span> <span class="n">before</span>
+    <span class="k">return</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mf">0.5</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">alphabet</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">check</span><span class="p">(</span><span class="n">password</span> <span class="o">+</span> <span class="n">c</span><span class="p">):</span>
+                <span class="n">password</span> <span class="o">+=</span> <span class="n">c</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;password=</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NotFound</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></p>
+<p>Running this a couple of times, yielded a few prefixes before failing</p>
+<ul>
+<li>thurs</li>
+<li>sunda</li>
+<li>monda</li>
+</ul>
+<h3 id="wordlists">Wordlists<a class="headerlink" href="#wordlists" title="Permanent link">&para;</a></h3>
+<p>Due to the prefixes appearing to be days of the week, the script was adapted to try these first
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="n">alphabet</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s2">&quot;pwdguessr.chal.cybears.io&quot;</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">2323</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+<span class="n">user_line</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">user_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&quot;Please enter your password: &quot;</span><span class="p">)</span>
+<span class="n">days</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;monday&quot;</span><span class="p">,</span> <span class="s2">&quot;tuesday&quot;</span><span class="p">,</span> <span class="s2">&quot;wednesday&quot;</span><span class="p">,</span> <span class="s2">&quot;thursday&quot;</span><span class="p">,</span> <span class="s2">&quot;friday&quot;</span><span class="p">,</span> <span class="s2">&quot;saturday&quot;</span><span class="p">,</span> <span class="s2">&quot;sunday&quot;</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">SuccessfulConnection</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Timeout</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">NotFound</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">out</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;Sorry&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">out</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;Conne&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Timeout</span>
+        <span class="k">raise</span> <span class="n">SuccessfulConnection</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+    <span class="n">after</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&quot;Please enter your password: &quot;</span><span class="p">)</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">after</span> <span class="o">-</span> <span class="n">before</span>
+    <span class="k">return</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mf">0.5</span>
+
+<span class="k">def</span> <span class="nf">brute</span><span class="p">(</span><span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">alphabet</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">check</span><span class="p">(</span><span class="n">password</span> <span class="o">+</span> <span class="n">c</span><span class="p">):</span>
+                <span class="n">password</span> <span class="o">+=</span> <span class="n">c</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;password=</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NotFound</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">guess_days</span><span class="p">(</span><span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">days</span><span class="p">:</span>
+        <span class="n">test</span> <span class="o">=</span> <span class="n">password</span> <span class="o">+</span> <span class="n">day</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checking: </span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">check</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">test</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Falling back to bruteforce&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">brute</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">guess_days</span><span class="p">()</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">brute</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+Running this discovered more of the prefix, specifically that the passwords began with a day
+of the week followed by either <code>episode</code> or <code>harry</code>.</p>
+<p>To accomodate the multiple wordlists, <code>guess_days</code> was refactored into a <code>guess_words</code> function
+<div class="highlight"><pre><span></span><code><span class="c1"># SNIP</span>
+<span class="k">def</span> <span class="nf">guess_words</span><span class="p">(</span><span class="n">words</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="n">test</span> <span class="o">=</span> <span class="n">password</span> <span class="o">+</span> <span class="n">word</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checking: </span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">check</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found: </span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">test</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">fallback</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to use password from </span><span class="si">{</span><span class="n">words</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Falling back to bruteforce&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">brute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">guess_words</span><span class="p">(</span><span class="n">days</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">guess_words</span><span class="p">([</span><span class="s2">&quot;episode&quot;</span><span class="p">,</span> <span class="s2">&quot;harry&quot;</span><span class="p">])</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">brute</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+<span class="c1"># SNIP</span>
+</code></pre></div></p>
+<p>This revealed that the second segment of the password was either of the form <code>harrypotterandthe</code> (name of harry potter movie with no spaces)
+or <code>episodeonetheph</code> (or any of the 9 Starwars movies)</p>
+<p>Adapting the script
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">guess_words</span><span class="p">(</span><span class="n">days</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">guess_words</span><span class="p">([</span><span class="s2">&quot;episode&quot;</span><span class="p">,</span> <span class="s2">&quot;harrypotterandthe&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">password</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;episode&quot;</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">guess_words</span><span class="p">(</span><span class="n">starwars_episodes</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">password</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;harrypotterandthe&quot;</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">guess_words</span><span class="p">(</span><span class="n">potter_movies</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">brute</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I've skipped over a fair amount of trial and error while tweaking the wordlists to get the correct movie names</p>
+</div>
+<h3 id="optimisation-guess-prefixes">Optimisation - Guess Prefixes<a class="headerlink" href="#optimisation-guess-prefixes" title="Permanent link">&para;</a></h3>
+<p>At this point, I decided to slightly optimize my guesses so that I could </p>
+<ol>
+<li>Simplify my wordlists</li>
+<li>Reduce number of guesses prior to bruteforce, so I get more info before timing out</li>
+</ol>
+<p>I noticed that when guessing from a wordlist, some words had common prefixes, which could be guessed independently.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="c1"># SNIP</span>
+
+<span class="k">def</span> <span class="nf">guess_words_smart</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="c1"># Don&#39;t bother with divide and conquer for two passwords</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">guess_words</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="c1"># Get most common first letters</span>
+    <span class="n">first_letters</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">first_letters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># If no common first letters just revert to guessing words</span>
+        <span class="k">return</span> <span class="n">guess_words</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="c1"># List of letters that have more than one word in list starting with them, ordered by </span>
+    <span class="n">first_letters_s</span> <span class="o">=</span> <span class="p">[</span><span class="n">letter</span> <span class="k">for</span> <span class="n">letter</span><span class="p">,</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="n">first_letters</span> <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">new_s</span> <span class="o">=</span> <span class="n">guess_words</span><span class="p">(</span><span class="n">first_letters_s</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">new_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">first_letters_s</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_words</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">new_words</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">new_s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">new_s</span><span class="p">)</span>
+</code></pre></div>
+<p>With this optimisation, I could join the starwars episodes and harry potter movies wordlists without sacrificing performance.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">days</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">movies</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="n">brute</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="more-wordlists">More Wordlists<a class="headerlink" href="#more-wordlists" title="Permanent link">&para;</a></h3>
+<p>With the optimisation out of the way, was able to bruteforce more of the next section of the password.</p>
+<p>After a few prefixes were recovered, I recognised they were elements of the periodic table and added that as a wordlist
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">days</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">movies</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+    <span class="n">brute</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>What I did not realize at this point was that a few elements were spelled differently in the periodic table
+I used as a reference. This was uncovered during <a href="../pwdguessr2/">PwdGuessr 2</a>, but caused unexplained failure in ~4% of attempts.</p>
+</div>
+<h3 id="even-more-wordlists">Even More Wordlists<a class="headerlink" href="#even-more-wordlists" title="Permanent link">&para;</a></h3>
+<p>Running the script a few more times revealed that the next (and last) part of the password were words from the Nato
+phonetic alphabet. </p>
+<p>After adding the nato word list, running the script gave the file</p>
+<h3 id="full-source">Full Source<a class="headerlink" href="#full-source" title="Permanent link">&para;</a></h3>
+<h4 id="pwdguessrpy">pwdguessr.py<a class="headerlink" href="#pwdguessrpy" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">pwdguessrlists</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">elements</span><span class="p">,</span>
+    <span class="n">days</span><span class="p">,</span>
+    <span class="n">nato_phonetic</span><span class="p">,</span>
+    <span class="n">movies</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># host = &quot;pwdguessr.chal.cybears.io&quot;</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">2323</span>
+<span class="n">alphabet</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+<span class="n">user_line</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">user_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&quot;Please enter your password: &quot;</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">SuccessfulConnection</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">NotFound</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">Timeout</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">out</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;Sorry&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">out</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;Conne&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Timeout</span>
+        <span class="k">raise</span> <span class="n">SuccessfulConnection</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+    <span class="n">after</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s2">&quot;Please enter your password: &quot;</span><span class="p">)</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">after</span> <span class="o">-</span> <span class="n">before</span>
+    <span class="k">return</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mf">0.5</span>
+
+
+<span class="k">def</span> <span class="nf">brute</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">alphabet</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">check</span><span class="p">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">c</span><span class="p">):</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">c</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;s=</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NotFound</span><span class="p">(</span><span class="s2">&quot;Brute&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">guess_words</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="n">test</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="n">word</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checking: </span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">check</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">test</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">fallback</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to use password from </span><span class="si">{</span><span class="n">words</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Falling back to bruteforce&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">brute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">guess_words_smart</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="c1"># Napkin maths says 3 is a good number</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">guess_words</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">first_letters</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">first_letters</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">guess_words</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">first_letters_s</span> <span class="o">=</span> <span class="p">[</span><span class="n">letter</span> <span class="k">for</span> <span class="n">letter</span><span class="p">,</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="n">first_letters</span> <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">new_s</span> <span class="o">=</span> <span class="n">guess_words</span><span class="p">(</span><span class="n">first_letters_s</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">new_s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">new_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">first_letters_s</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_words</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">new_words</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">new_s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">new_s</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">days</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Partial: </span><span class="si">{</span><span class="n">s</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">movies</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Partial: </span><span class="si">{</span><span class="n">s</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Partial: </span><span class="si">{</span><span class="n">s</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">guess_words_smart</span><span class="p">(</span><span class="n">nato_phonetic</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Partial: </span><span class="si">{</span><span class="n">s</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">brute</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">SuccessfulConnection</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;We&#39;re in!&quot;</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvall</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">out</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User: </span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="pwdguessrlistspy">pwdguessrlists.py<a class="headerlink" href="#pwdguessrlistspy" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">days</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;monday&quot;</span><span class="p">,</span> <span class="s2">&quot;tuesday&quot;</span><span class="p">,</span> <span class="s2">&quot;wednesday&quot;</span><span class="p">,</span> <span class="s2">&quot;thursday&quot;</span><span class="p">,</span> <span class="s2">&quot;friday&quot;</span><span class="p">,</span> <span class="s2">&quot;saturday&quot;</span><span class="p">,</span> <span class="s2">&quot;sunday&quot;</span><span class="p">]</span>
+<span class="n">movies</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;harrypotterandthechamberofsecrets&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harrypotterandthedeathlyhallowspartone&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harrypotterandthedeathlyhallowsparttwo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harrypotterandthegobletoffire&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harrypotterandthegobletoffire&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harrypotterandthehalfbloodprince&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harrypotterandtheorderofthephoenix&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harrypotterandthephilosophersstone&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harrypotterandtheprisonerofazkaban&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;harrypotterandtheprisonerofazkaban&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;episodeeightthelastjedi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;episodefivetheempirestrikesback&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;episodefouranewhope&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;episodeninetheriseofskywalker&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;episodeonethephantommenace&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;episodeseventheforceawakens&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;episodesixreturnofthejedi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;episodethreerevengeofthesith&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;episodetwoattackoftheclones&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">starwars_episodes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;eightthelastjedi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fivetheempirestrikesback&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fouranewhope&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ninetheriseofskywalker&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;onethephantommenace&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;seventheforceawakens&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sixreturnofthejedi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;threerevengeofthesith&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;twoattackoftheclones&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">potter_movies</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;chamberofsecrets&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deathlyhallowspartone&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;deathlyhallowsparttwo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gobletoffire&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;halfbloodprince&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;orderofthephoenix&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;philosophersstone&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;prisonerofazkaban&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">elements</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;actinium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;aluminium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;aluminum&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;americium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;antimony&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;argon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;arsenic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;astatine&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;barium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;berkelium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;beryllium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bismuth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bohrium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;boron&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bromine&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cadmium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;calcium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;californium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;carbon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cerium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;caesium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;chlorine&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;chromium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cobalt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;copernicium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;copper&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;curium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;darmstadtium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dubnium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dysprosium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;einsteinium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;erbium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;europium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fermium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;flerovium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fluorine&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;francium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gadolinium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gallium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;germanium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gold&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hafnium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hassium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;helium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;holmium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hydrogen&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;indium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iodine&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iridium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iron&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;krypton&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lanthanum&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lawrencium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lead&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lithium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;livermorium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lutetium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;magnesium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;manganese&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;meitnerium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mendelevium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mercury&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;molybdenum&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;moscovium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;neodymium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;neon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;neptunium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nickel&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nihonium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;niobium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nitrogen&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nobelium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oganesson&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;osmium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oxygen&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;palladium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phosphorus&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;platinum&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;plutonium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;polonium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;potassium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;praseodymium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;promethium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;protactinium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;radium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;radon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rhenium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rhodium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;roentgenium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rubidium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ruthenium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rutherfordium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;samarium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;scandium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;seaborgium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;selenium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;silicon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;silver&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sodium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;strontium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sulfur&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tantalum&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;technetium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tellurium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tennessine&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;terbium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;thallium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;thorium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;thulium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;titanium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tungsten&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;uranium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;vanadium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;wolfram&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;xenon&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ytterbium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;yttrium&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;zinc&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;zirconium&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">nato_phonetic</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;alfa&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bravo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;charlie&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;delta&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;echo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;foxtrot&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;golf&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hotel&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;india&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;juliett&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;kilo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lima&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mike&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;november&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;oscar&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;papa&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;quebec&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;romeo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sierra&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tango&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;uniform&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;victor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;whiskey&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;xray&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;yankee&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;zulu&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div>
+                
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: 2021-04-11
+    
+  </small>
+</div>
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../.." class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Writeups
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../pwdguessr2/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              PwdGuessr 2
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.expand", "navigation.sections", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d892486b.min.js"></script>
+      
+    
+  </body>
+</html>
