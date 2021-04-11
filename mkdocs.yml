@@ -6,8 +6,6 @@ theme:
   features:
     - search.suggest
     - search.highlight
-    - navigation.tabs
-    - navigation.tabs.sticky
     - navigation.expand
     - navigation.sections
     - toc.integrate
